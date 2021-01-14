@@ -1,0 +1,491 @@
+# EasyQuant
+`GaryHertel`
+
+------
+
+`EasyQuant`框架及各种学习资料仅供内部学员学习参考与使用，请勿外传或用于其他用途。
+
+`EasyQuant`意在：约其辞文，去其繁重，以简量化。 极简单做量化！
+
+人生苦短，我用`Python`！
+
+交易路漫漫，我用`EasyQuant`！
+
+------
+
+## 支持的交易所
+
+|     PLATFORM     |        交易所名称         |
+| :--------------: | :-----------------------: |
+|    `OKEXSPOT`    |         `ok`现货          |
+|  `OKEXFUTURES`   |       `ok`交割合约        |
+|    `OKEXSWAP`    |       `ok`永续合约        |
+|   `HUOBISPOT`    |         火币现货          |
+|  `HUOBIFUTURES`  |       火币交割合约        |
+|   `HUOBISWAP`    | 火币`币本位/USDT`永续合约 |
+|  `BINANCESPOT`   |         币安现货          |
+| `BINANCEFUTURES` |     币安`币本位`合约      |
+|  `BINANCESWAP`   |      币安`USDT`合约       |
+
+------
+
+## 开始使用
+
+使用时只需导入模块并初始化`Trade`：
+
+```python
+from easyquant.base import *
+
+t = Trade('config.json', "OKEXFUTURES", "TRX-USDT-201225", "1m")
+```
+
+初始化时各参数声明（可选参数根据不同交易所进行不同设置）：
+
+|    参数名称     |   类型   | 是否必填 |          参数说明           |        示例        |
+| :-------------: | :------: | :------: | :-------------------------: | :----------------: |
+|  `config_file`  | `string` |    是    |  `json`格式的配置文件路径   |  `'config.json'`   |
+|   `platform`    | `string` |    是    |         交易所名称          |  `'OKEXFUTURES'`   |
+|    `symbol`     | `string` |    是    |   合约`ID`或者现货对名称    | `'BTC-USD-210326'` |
+|  `time_frame`   | `string` |    是    |          `K`线周期          |       `'1m'`       |
+|  `margin_mode`  | `string` |    否    |   全/逐仓模式（默认全仓）   |     `'fixed'`      |
+|   `leverage`    |  `int`   |    否    |          杠杆倍数           |        `10`        |
+|   `currency`    | `string` |    否    |          基价货币           |      `'usdt'`      |
+| `position_side` | `string` |    否    | 单/双向持仓模式（默认单向） |      `'both'`      |
+
+------
+
+## 获取交易所原始信息的几个方法
+
+```python
+(1)获取指定order_id的订单的信息：t.orders(order_id)
+(2)获取指定币对的ticker信息：t.tickers()
+(3)获取指定币对的orderbook信息：t.orderbooks()
+(4)获取全部币对的持仓信息：t.positions()
+(5)获取全部币对的价格精度等等信息：t.info()
+```
+
+## 获取行情
+
++ 获取卖盘订单簿（返回一个列表）
+
+  ```python
+  t.asks
+  ```
+
++ 获取买盘订单簿（返回一个列表）
+
+  ```python
+  t.bids
+  ```
+
++ 获取返回的`K`线总数（返回整数）
+
+  ```python
+  t.bar_count
+  ```
+
++ 获取合约面值（返回数值）
+
+  ```python
+  t.contract_value
+  ```
+
++ 获取当根`k`线开盘价（返回小数）
+
+  ```python
+  t.open
+  ```
+
++ 获取当前`K`线最高价
+
+  ```python
+  t.high
+  ```
+
++ 获取当前`K`线最低价
+
+  ```python
+  t.low
+  ```
+
++ 获取当前`K`线收盘价
+
+  ```python
+  t.close
+  ```
+
++ 获取当前最新成交价
+
+  ```python
+  t.last
+  ```
+
++ 获取当前`K`线成交量
+
+  ```python
+  t.volume
+  ```
+
++ 获取永续合约资金费率
+
+  ```python
+  t.funding_rate
+  ```
+
++ 获取k线（返回一个列表）
+
+  ```python
+  t.get_kline()
+  ```
+
++ 获取指定历史k线开盘价
+
+  ```python
+  t.history_open(param)
+  ```
+
++ 获取指定历史k线最高价
+
+  ```python
+  t.history_high(param)
+  ```
+
++ 获取指定历史k线最低价
+
+  ```python
+  t.history_low(param)
+  ```
+
++ 获取指定历史k线收盘价
+
+  ```python
+  t.history_close(param)
+  ```
+  
+  
+
+------
+
+## 获取持仓 
+
++ 获取单向持仓模式下当前持仓方向（返回字符串`long`或者`short`或者`none`）
+
+  ```python
+  t.current_direction
+  ```
+
++ 获取单向持仓模式下当前持仓数量（数值）
+
+  ```python
+  t.current_contracts
+  ```
+
++ 获取单向持仓模式下当前持仓均价（小数）
+
+  ```python
+  t.current_price
+  ```
+
++ 获取双向持仓模式下当前多头持仓数量（数值）
+
+  ```python
+  t.current_long_contracts
+  ```
+
++ 获取双向持仓模式下当前空头持仓数量（数值）
+
+  ```python
+  t.current_short_contracts
+  ```
+
++ 获取双向持仓模式下当前多头持仓均价（小数）
+
+  ```python
+  t.current_long_price
+  ```
+
++ 获取双向持仓模式下当前空头持仓均价（小数）
+
+  ```python
+  t.current_short_price
+  ```
+
++ 获取单个币种的可用权益（小数）
+
+  ```python
+  t.free_asset	# 需在初始化时传入currency参数
+  ```
+
+------
+
+## 下单（返回 订单状态）
+
+```python
+t.buy(price, quantity)			# 买入开多
+t.sell(price, quantity)			# 卖出平多
+t.sellshort(price, quantity)	# 卖出开空
+t.buytocover(price, quantity)	# 买入平空
+t.cancel_order(order_id)		# 撤销指定订单
+t.get_order_info(order_id)		# 查询指定订单信息
+```
+
+------
+
+## 日志
+
+```python
+# 输出指定信息日志
+logger.debug(message)
+logger.info(message)
+logger.error(message)
+logger.warning(message)
+logger.critical(message)
+```
+
+```python
+# 容错处理时记录调用 堆栈信息
+try:
+    print(a)
+except:
+    logger.error()	# 不需传参
+```
+
+------
+
+## 信息推送
+
+```python
+push(message)	# 推送信息至邮件/钉钉/短信
+```
+
+------
+
+## 时间
+
++ 电脑当前日期
+
+  ```python
+  current_date()
+  ```
+
++ 电脑当前时间
+
+  ```python
+  current_time()
+  ```
+
++ 休眠（秒）
+
+  ```python
+  sleep(3)
+  ```
+
++ 当前时间戳
+
+  ```python
+  current_timestamp()		# 秒时间戳
+  current_ms_timestamp()	# 毫秒时间戳
+  ```
+
++ `utc`时间戳转为秒时间戳
+
+  ```python
+  utctime_str_to_ts(utctime_str)
+  ```
+
++ 循环运行一个函数
+
+  ```python
+  ts_to_datetime_str(ts)
+  ```
+
+------
+
+## 数据存储/读取
+
++ 保存数据至`txt`文件
+
+  ```python
+  txt_save(content, filename)
+  ```
+
++ 读取`txt`文件中数据
+
+  ```python
+  txt_read(filename)
+  ```
+
++ 从交易所获取历史k线数据，并将其存储至`MySQL`数据库中
+
+  ```python
+  t.save_history_kline(database, data_sheet)
+  ```
+
++ 从交易所获取实时k线数据，并将其存储至`MySQL`数据库中
+
+  ```python
+  t.save_realtime_kline(database, data_sheet)
+  ```
+
++ 查询`MySQL`数据库中满足条件的数据
+
+  ```python
+  read_mysql_data(data, database, datasheet, field, operator)
+  ```
+
++ 查询`MySQL`数据库中满足条件的指定数据
+
+  ```python
+  read_mysql_specific_data(data, database, datasheet, field)
+  ```
+
++ 保存数据至`Mongodb`
+
+  ```python
+  save_to_mongodb(database, collection, data)
+  ```
+
++ 读取`Mongodb`指定数据库、指定集合中的数据
+
+  ```python
+  read_mongodb_data(database, collection)
+  ```
+
++ 导出`Mongodb`指定数据库、指定集合中的数据至`CSV`文件
+
+  ```python
+  export_mongodb_to_csv(database, collection, csv_file_path)
+  ```
+
++ 删除`MySQL`中的数据库
+
+  ```python
+  delete_mysql_database(database)
+  ```
+
++ 删除`Mongodb`中的数据库
+
+  ```python
+  delete_mongodb_database(database)
+  ```
+
++ 将自定义`csv`数据源的1分钟k线数据合成为任意周期的 k线数据，返回列表类型的k线数据，并自动保存新合成的k线数据至`csv`文件
+
+  ```python
+  combine_kline(csv_file_path, interval)
+  ```
+
++ 获取内部服务器上存储的历史`k`线数据，可直接用于回测
+
+  ```python
+  read_server_data("binance", 2018, "btc", "1d")
+  ```
+
+  
+
+------
+
+## 技术指标
+
+```python
+t.atr(length)									# 真实波幅
+t.boll(length)									# 布林
+t.bar_update()									# 判断k线是否更新
+t.highest(length)								# 周期最高价
+t.ma(length, *args)								# 移动平均线(简单移动平均)
+t.macd(fastperiod, slowperiod, signalperiod)	  # MACD
+t.ema(length, *args)							# 指数移动平均线
+t.kama(length, *args)							# 适应性移动平均线
+t.kdj(fastk_period, slowk_period, slowd_period)	   # k值和d值
+t.lowest(length)								# 周期最低价
+t.obv()											# 能量潮
+t.rsi(length)									# RSI
+t.roc(length)									# 变动率指标
+t.stochrsi(timeperiod, fastk_period, fastd_period)	# STOCHRSI
+t.sar()											# 抛物线指标
+t.stddev(length, nbdev=None)					  # 标准差
+t.trix(length)									# 三重指数平滑平均线
+t.returnthisbar()								# 此根k线不再运行策略，直到新的k线产生，此方法是堵塞的
+```
+
+------
+
+## 配置文件
+
+`json`配置文件内容如下（注释仅为说明各设置之用途）
+
+```json
+{
+    "STATUS": {
+        "first_run": true                # 策略是否初次启动
+    },
+    "LOG": {        # 日志输出的级别与方式
+        "level": "debug",
+        "handler": "stream"
+    },
+    "PUSH": {        # 信息推送渠道设置
+        "sendmail": false,
+        "dingtalk": true,
+        "twilio": false
+    },
+    "ASSISTANT": {
+        "automatic_cancellation": true,        # 是否启用自动撤单                                     
+        "reissue_order": "0.0%",                        # 撤单后重发委托的超价幅度
+        "price_cancellation": true,                # 是否启用价格撤单
+        "amplitude": "0.5%",                                # 最新价超过挂单价格的幅度设置
+        "time_cancellation": true,                # 是否启用超时未成交自动撤单
+        "seconds": 10                                                # 超时时间设置
+    },
+     "EXCHANGE": {
+        "okex": {
+            "access_key": "your access key",
+            "secret_key": "your secret key",
+            "passphrase": "your passphrase"
+        },
+        "huobi": {
+            "access_key": "your access key",
+            "secret_key": "your secret key"
+        },
+        "binance": {
+            "access_key": "your access key",
+            "secret_key": "your secret key"
+        }
+    },
+    "MYSQL": {                # MySql数据库是否修改了密码
+        "authorization": false,
+        "user_name": "root",
+        "password": ""
+    },
+    "MONGODB": {        # MongoDB数据库是否设置了授权验证
+        "authorization": false,
+        "user_name": "root",
+        "password": ""
+    },
+    "DINGTALK": {        # 钉钉webhook机器人api
+        "ding_talk_api": "你的钉钉api"
+    },
+    "TWILIO": {                # twilio短信账户设置
+        "accountSID" : "你的accountSID",
+        "authToken" : "你的authToken",
+        "myNumber" : "你的手机号",
+        "twilio_Number" : "你的twilio number"
+    },
+    "SENDMAIL": {        # 邮箱设置
+        "from_addr" : "你的qq号码@qq.com",
+        "password" : "你的qq邮箱授权码",
+        "to_addr" : "你的qq号码@qq.com",   # 收件邮箱可以是任意邮箱；也可以是发件的邮箱，自己给自己发邮件。
+        "smtp_server" : "smtp.qq.com",
+        "port": 587
+    },
+    "PROXY": "127.0.0.1:9999"	# 此处代理即可作用于所有http请求。
+}
+```
+
+
+
+------
+
+`Gary-Hertel`
+
+`2020/11/09`
+

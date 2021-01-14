@@ -1,0 +1,65 @@
+{
+    "STATUS": {
+        "first_run": true
+    },
+    "LOG": {
+        "level": "debug",
+        "handler": "stream",
+        "backup_count": 10
+    },
+    "PUSH": {
+        "sendmail": false,
+        "dingtalk": true,
+        "twilio": false
+    },
+    "ASSISTANT": {
+        "automatic_cancellation": true,
+        "reissue_order": "0.0%",
+        "price_cancellation": true,
+        "amplitude": "0.5%",
+        "time_cancellation": true,
+        "seconds": 10
+    },
+    "EXCHANGE": {
+        "okex": {
+            "access_key": "your access key",
+            "secret_key": "your secret key",
+            "passphrase": "your passphrase"
+        },
+        "huobi": {
+            "access_key": "your access key",
+            "secret_key": "your secret key"
+        },
+        "binance": {
+            "access_key": "your access key",
+            "secret_key": "your secret key"
+        }
+    },
+    "MYSQL": {
+        "authorization": false,
+        "user_name": "root",
+        "password": ""
+    },
+    "MONGODB": {
+        "authorization": false,
+        "user_name": "root",
+        "password": ""
+    },
+    "DINGTALK": {
+        "ding_talk_api": "https://oapi.dingtalk.com/robot/send?access_token=d3a368794233ccca34b453"
+    },
+    "TWILIO": {
+        "accountSID" : "AC97559cd39061ad140f",
+        "authToken" : "3616b6ce232ca2fa4aa559",
+        "myNumber" : "+8615333323332",
+        "twilio_Number" : "+12058946785"
+    },
+    "SENDMAIL": {
+        "from_addr" : "123456789@qq.com",
+        "password" : "xxeqsfqwcjgj",
+        "to_addr" : "123@icloud.com",
+        "smtp_server" : "smtp.qq.com",
+        "port": 587
+    },
+    "PROXY": "127.0.0.1:9999"
+}

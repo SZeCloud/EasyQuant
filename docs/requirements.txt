@@ -1,0 +1,11 @@
+numpy
+ta-lib
+requests
+concurrent-log-handler
+colorlog
+pandas
+mysql-connector-python
+pymongo
+twilio
+matplotlib
+

@@ -140,7 +140,8 @@ class FutureAPI(Client):
         return self._request_with_params(POST, FUTURE_CANCEL_ALL, params)
 
     # take order_algo
-    def take_order_algo(self, instrument_id, type, order_type, size, trigger_price='', algo_price='', algo_type='', callback_rate='', algo_variance='', avg_amount='', price_limit='', sweep_range='', sweep_ratio='', single_limit='', time_interval=''):
+    def take_order_algo(self, instrument_id, type, order_type, size, trigger_price='', algo_price='', algo_type='', callback_rate='', algo_variance='', avg_amount='', price_limit='', sweep_range='', sweep_ratio='', single_limit='', time_interval='',
+                        tp_trigger_price='', tp_price='', tp_trigger_type='', sl_trigger_type='', sl_trigger_price='', sl_price=''):
         params = {'instrument_id': instrument_id, 'type': type, 'order_type': order_type, 'size': size}
         if order_type == '1': # 止盈止损参数（最多同时存在10单）
             params['trigger_price'] = trigger_price
@@ -160,6 +161,13 @@ class FutureAPI(Client):
             params['single_limit'] = single_limit
             params['price_limit'] = price_limit
             params['time_interval'] = time_interval
+        elif order_type == '5':
+            params['tp_trigger_price'] = tp_trigger_price
+            params['tp_price'] = tp_price
+            params['tp_trigger_type'] = tp_trigger_type
+            params['sl_trigger_type	'] = sl_trigger_type
+            params['sl_trigger_price'] = sl_trigger_price
+            params['sl_price'] = sl_price
         return self._request_with_params(POST, FUTURE_ORDER_ALGO, params)
 
     # cancel_algos

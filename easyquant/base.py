@@ -51,7 +51,6 @@ import mysql.connector
 from matplotlib import pyplot as plt
 import os
 import pandas as pd
-import finplot as fplt
 from easyquant import const
 
 

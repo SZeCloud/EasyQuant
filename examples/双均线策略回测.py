@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     strategy = Strategy()
     records = []
-    kline = read_server_data("binance", 2018, "btc", "1d")
+    kline = read_server_data("binance", 2018, "btc", "1h")
     for k in kline:
         records.append(k)
         strategy.b.initialize(records, kline)

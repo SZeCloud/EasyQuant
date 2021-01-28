@@ -87,7 +87,8 @@ def order(symbol, side, order_type, **kwargs):
     params = {
         "symbol": symbol,
         "side": side,
-        "type": order_type
+        "type": order_type,
+        "recvWindow": 10000
     }
     params.update(kwargs)
     path = "/fapi/v1/order"

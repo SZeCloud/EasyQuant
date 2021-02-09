@@ -168,25 +168,10 @@ class HuobiSVC:
         :param currency: e.g. etc
         :return:
         """
-        try:
-            if currency:
-                balance = 0
-                res = self.get_balance(acct_id=acct_id)
-                l = []
-                list = res['data']['list']
-                for item in list:
-                    if item['type'] == 'trade':
-                        l.append({item['currency']: item['balance']})
-                for x in l:
-                    if '%s'%currency in x.keys():
-                       balance = x['%s'%currency]
-                    else:
-                        pass
-                return {currency: balance}
-            else:
-                return self.get_balance(acct_id=acct_id)
-        except Exception as msg:
-            return msg
+        result = self.get_balance(acct_id=acct_id)
+        for item in result["data"]["list"]:
+            if (item["currency"]).upper() == currency:
+                return {currency.upper(): item["balance"]}
 
     # Making Orders
     def send_order(self, acct_id, amount, source, symbol, _type, price=0, stop_price=0, operator=None):

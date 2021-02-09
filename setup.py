@@ -8,7 +8,7 @@ except ImportError:
 
 setup(
     name="easyquant",
-    version="0.0.8",
+    version="0.0.9",
     packages=[
         "easyquant",
         "easyquant/exchange",

@@ -168,10 +168,11 @@ class HuobiSVC:
         :param currency: e.g. etc
         :return:
         """
-        result = self.get_balance(acct_id=acct_id)
-        for item in result["data"]["list"]:
-            if (item["currency"]).upper() == currency:
-                return {currency.upper(): item["balance"]}
+        if currency:
+            result = self.get_balance(acct_id=acct_id)
+            for item in result["data"]["list"]:
+                if (item["currency"]) == currency.lower():
+                    return {currency: item["balance"]}
 
     # Making Orders
     def send_order(self, acct_id, amount, source, symbol, _type, price=0, stop_price=0, operator=None):
